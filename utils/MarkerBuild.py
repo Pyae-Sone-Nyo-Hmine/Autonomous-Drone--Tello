@@ -140,6 +140,7 @@ def take_picture(img, take):
 
 
 # save video of tello drone
-def take_video(video, img):
+def take_video( img):
+    video = cv2.VideoWriter("tello_video.avi", cv2.VideoWriter_fourcc(*'MJPG'), 80, (720, 480))
     if kb.is_pressed('v'):
         video.write(img)
