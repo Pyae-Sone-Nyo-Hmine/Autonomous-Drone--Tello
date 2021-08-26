@@ -27,7 +27,7 @@ def flight_mode(take=TAKE):
         cv2.imshow("Tello Stream", img)
 
         take = take_picture(img, take)
-        take_video(img)
+        take_video(image = img)
 
         cv2.waitKey(1)
 

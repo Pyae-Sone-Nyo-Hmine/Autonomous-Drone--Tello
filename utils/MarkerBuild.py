@@ -3,6 +3,7 @@ import cv2.aruco as aruco
 import keyboard as kb
 from utils.MarkerClass import *
 from time import sleep
+import random
 
 
 # detects the ar marker and gives values of 4 corners and ids
@@ -131,7 +132,7 @@ def slope_orientation_with_PID(my_ar, kp, ki, kd, prev_s_error):
 # take pictures if p is pressed every 100 milliseconds
 def take_picture(img, take):
     if kb.is_pressed("p"):
-        cv2.imwrite("/Users/pyaey/OneDrive/Desktop/Tello/" + "tello_image" + str(take) + ".png", img)
+        cv2.imwrite("/Users/pyaey/OneDrive/Desktop/Tello_initial/" + "tello_image" + str(take) + ".png", img)
         sleep(0.1)
 
         take += 1
@@ -140,7 +141,6 @@ def take_picture(img, take):
 
 
 # save video of tello drone
-def take_video( img):
-    video = cv2.VideoWriter("tello_video.avi", cv2.VideoWriter_fourcc(*'MJPG'), 80, (720, 480))
+def take_video(image, video=cv2.VideoWriter("tello_video.avi", cv2.VideoWriter_fourcc(*'MJPG'), 80, (720, 480))):
     if kb.is_pressed('v'):
-        video.write(img)
+        video.write(image)
