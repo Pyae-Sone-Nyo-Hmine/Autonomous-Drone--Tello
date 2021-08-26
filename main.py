@@ -91,8 +91,8 @@ def aruco_tracking(follow_AR=True, slope_orient=True, take=TAKE):
             else:
                 lr_speed = 0
 
-            my_drone.send_rc_control(lr_speed + values[0], fb_speed + values[1], yaw_speed + values[2],
-                                     ud_speed + values[3])
+            my_drone.send_rc_control(lr_speed + values[0], fb_speed + values[1], ud_speed + values[2],
+                                     yaw_speed + values[3])
 
         except:
             values = motion_func(my_drone=my_drone)
@@ -109,17 +109,17 @@ def pose_tracking(draw=True, take=TAKE):
     prev_ud_error = 0
     prev_yaw_error = 0
 
-    fbP = 0.001
+    fbP = 0
     fbI = 0
-    fbD = 0.00005
+    fbD = 0.
 
-    udP = 0.025
+    udP = 0.4
     udI = 0
-    udD = 0.02
+    udD = 2
 
-    ywP = 0.1
+    ywP = 0.67
     ywI = 0
-    ywD = 0.03
+    ywD = 1
 
     # MAIN LOOP
     while True:
@@ -142,7 +142,7 @@ def pose_tracking(draw=True, take=TAKE):
         prev_ud_error, ud_speed = man_up_down_with_PID(man, udP, udI, udD, prev_ud_error)
         prev_yaw_error, yw_speed = man_yaw_with_PID(man, ywP, ywI, ywD, prev_yaw_error)
 
-        my_drone.send_rc_control(values[0], fb_speed + values[1], yw_speed + values[2], ud_speed + values[3])
+        my_drone.send_rc_control(values[0], fb_speed + values[1], ud_speed + values[2],  yw_speed + values[3])
 
         if kb.is_pressed('0') or kb.is_pressed('1'):
             break
