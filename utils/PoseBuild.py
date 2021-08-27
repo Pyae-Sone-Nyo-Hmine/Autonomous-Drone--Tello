@@ -4,9 +4,9 @@ from utils.PoseClass import *
 
 def follow_man_with_PID(man, kp, ki, kd, prev_fb_error):
     if man.landmarks:
-        man.torso_area()
+        man.shoulder_length()
 
-        fb_error = 14000 - man.torso_area
+        fb_error = 250 - man.shoulder_length
         fb_speed = kp * fb_error + ki * fb_error + kd * (fb_error - prev_fb_error)
         fb_speed = int(np.clip(fb_speed, -100, 100))
 

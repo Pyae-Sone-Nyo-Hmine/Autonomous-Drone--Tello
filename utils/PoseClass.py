@@ -33,14 +33,9 @@ class Pose:
                             self.landmarks.landmark[mp_holistic.PoseLandmark.LEFT_HIP].y * self.y
 
 
-    def torso_area(self):
+    def shoulder_length(self):
         if self.landmarks:
-            shoulder_length = length(self.right_shoulder[0], self.right_shoulder[1], self.left_shoulder[0],
+            self.shoulder_length = length(self.right_shoulder[0], self.right_shoulder[1], self.left_shoulder[0],
                                      self.left_shoulder[0])
-            hip_length = length(self.right_hip[0], self.right_hip[1], self.left_hip[0], self.left_hip[1])
-            h = abs((self.right_shoulder[1] + self.left_shoulder[1]) / 2 - (self.right_hip[1] + self.left_hip[1]) / 2)
-            area = (1 / 2) * (shoulder_length + hip_length) * h
-
-            self.torso_area = area
         else:
-            self.torso_area = 0
+            self.shoulder_length = 0

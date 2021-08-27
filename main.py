@@ -24,10 +24,10 @@ def flight_mode(take=TAKE):
         img = my_drone.get_frame_read().frame
         img = cv2.resize(img, (720, 480))
 
-        cv2.imshow("Tello Stream", img)
+        cv2.imshow("Flight mode", img)
 
         take = take_picture(img, take)
-        take_video(image = img)
+        take_video(image=img)
 
         cv2.waitKey(1)
 
@@ -46,19 +46,19 @@ def aruco_tracking(follow_AR=True, slope_orient=True, take=TAKE):
     prev_fb_error = 0
     prev_lr_error = 0
 
-    udP = 0.25
+    udP = 0.25  # aruco
     udI = 0
     udD = 2
 
-    lrP = 55
+    lrP = 55  # aruco
     lrI = 0
     lrD = 100
 
-    ywP = 0.3
+    ywP = 0.3  # aruco
     ywI = 0
     ywD = 1.5
 
-    fbP = 0.25
+    fbP = 0.25  # aruco
     fbI = 0
     fbD = 0.6
 
@@ -109,13 +109,13 @@ def pose_tracking(draw=True, take=TAKE):
     prev_ud_error = 0
     prev_yaw_error = 0
 
-    fbP = 0
+    fbP = 0.25
     fbI = 0
-    fbD = 0.
+    fbD = 1.2
 
-    udP = 0.4
+    udP = 0.36
     udI = 0
-    udD = 2
+    udD = 0.7
 
     ywP = 0.67
     ywI = 0
@@ -129,20 +129,20 @@ def pose_tracking(draw=True, take=TAKE):
 
         man = Pose(img)
 
-        if draw:
-            mp_drawing.draw_landmarks(img, man.results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
-        cv2.imshow("Human Tracking", img)
-        cv2.waitKey(1)
-
-        take = take_picture(img, take)
-        take_video(img)
-
         values = motion_func(my_drone)
         prev_fb_error, fb_speed = follow_man_with_PID(man, fbP, fbI, fbD, prev_fb_error)
         prev_ud_error, ud_speed = man_up_down_with_PID(man, udP, udI, udD, prev_ud_error)
         prev_yaw_error, yw_speed = man_yaw_with_PID(man, ywP, ywI, ywD, prev_yaw_error)
 
-        my_drone.send_rc_control(values[0], fb_speed + values[1], ud_speed + values[2],  yw_speed + values[3])
+        my_drone.send_rc_control(values[0], fb_speed + values[1], ud_speed + values[2], yw_speed + values[3])
+
+        take = take_picture(img, take)
+        take_video(img)
+
+        if draw:
+            mp_drawing.draw_landmarks(img, man.results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
+        cv2.imshow("Human Tracking", img)
+        cv2.waitKey(1)
 
         if kb.is_pressed('0') or kb.is_pressed('1'):
             break
