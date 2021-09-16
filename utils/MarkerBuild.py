@@ -132,7 +132,7 @@ def slope_orientation_with_PID(my_ar, kp, ki, kd, prev_s_error):
 # take pictures if p is pressed every 100 milliseconds
 def take_picture(img, take):
     if kb.is_pressed("p"):
-        cv2.imwrite("/Users/pyaey/OneDrive/Desktop/Tello_initial/" + "tello_image" + str(take) + ".png", img)
+        cv2.imwrite("Enter location for writing image" + "tello_image" + str(take) + ".png", img)
         sleep(0.1)
 
         take += 1
